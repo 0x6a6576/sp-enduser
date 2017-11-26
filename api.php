@@ -166,11 +166,14 @@ if ($_GET['type'] == 'bwcheck' && (isset($_GET['senderip']) || isset($_GET['send
 	$statement->execute(array(':recipient' => $recipient, ':recipientdomain' => $recipientdomain, ':senderip' => $senderip, ':senderdomain' => $senderdomain, ':sender' => $sender));
 	$blacklist = array();
 	$whitelist = array();
+	$antispoofexclusion = array(); // Added by jevin
 	while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
 		if ($row['type'] == 'blacklist')
 			$blacklist[] = $row['value'];
 		if ($row['type'] == 'whitelist')
 			$whitelist[] = $row['value'];
+		if ($row['type'] == 'antispoofexclusion')
+                        $antispoofexclusion[] = $row['value']; // Added by jevin
 	}
 
 	// 'text' response is checked by deprecated ScanBWList implementaton
@@ -178,6 +181,8 @@ if ($_GET['type'] == 'bwcheck' && (isset($_GET['senderip']) || isset($_GET['send
 		success_text('whitelist');
 	if (count($blacklist))
 		success_text('blacklist');
+	if (count($antispoofexclusion))
+                success_text('antispoofexclusion'); // Added by jevin
 	success_text('unknown');
 }
 

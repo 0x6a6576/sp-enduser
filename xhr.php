@@ -69,11 +69,11 @@ if ($_POST['page'] == 'bwlist')
 			if (!checkAccess($access))
 				die(json_encode(array('error' => 'permission', 'value' => $access)));
 
-			if ($type == 'whitelist' || $type == 'blacklist') {
+			if ($type == 'whitelist' || $type == 'blacklist' || $type == 'antispoofexclusion' ) {
 				if ($_POST['list'] == 'add') {
 					$statement = $dbh->prepare("INSERT INTO bwlist (access, type, value) VALUES(:access, :type, :value);");
 					$statement->execute(array(':access' => strtolower($access), ':type' => $type, ':value' => $value));
-				}
+				} // Added by jevin
 				if ($_POST['list'] == 'edit') {
 					$statement = $dbh->prepare("UPDATE bwlist SET type = :type, value = :value WHERE access = :access AND value = :old_value and type = :old_type;");
 					$statement->execute(array(':access' => strtolower($access), ':type' => $type, ':value' => $value, ':old_value' => $old_value, ':old_type' => $old_type));

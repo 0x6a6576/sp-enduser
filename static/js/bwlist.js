@@ -9,7 +9,7 @@ $(document).ready(function() {
 	});
 
 	$('.item').click(function() {
-		var types = {blacklist: 0, whitelist: 1};
+		var types = {blacklist: 0, whitelist: 1, antispoofexclusion: 2}; // Added by jevin
 		var type = $(this).data('type');
 
 		$('.item-hidden').addClass('info');
